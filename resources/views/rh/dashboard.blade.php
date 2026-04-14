@@ -18,6 +18,7 @@
         <div class="flex bg-slate-100 p-1.5 rounded-2xl">
             <button @click="tab = 'effectifs'" :class="tab === 'effectifs' ? 'bg-white shadow-md text-primary-600' : 'text-slate-500'" class="px-6 py-2 text-xs font-black rounded-xl transition-all">Effectifs</button>
             <button @click="tab = 'depts'" :class="tab === 'depts' ? 'bg-white shadow-md text-primary-600' : 'text-slate-500'" class="px-6 py-2 text-xs font-black rounded-xl transition-all">Départements</button>
+            <button @click="tab = 'pointages'" :class="tab === 'pointages' ? 'bg-white shadow-md text-primary-600' : 'text-slate-500'" class="px-6 py-2 text-xs font-black rounded-xl transition-all">Pointages</button>
         </div>
     </div>
 
@@ -133,6 +134,48 @@
             @endforelse
         </div>
     </div>
+
+    <!-- Pointages Tab -->
+    <div x-show="tab === 'pointages'" class="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden">
+        <div class="px-8 py-6 border-b border-slate-50 flex items-center justify-between bg-slate-50/30">
+            <div>
+                <h3 class="text-lg font-black text-slate-800">Registre des Présences</h3>
+                <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">Flux de pointage en temps réel</p>
+            </div>
+        </div>
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-slate-50/50 border-b border-slate-100">
+                    <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Date & Heure</th>
+                    <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Description de l'action</th>
+                    <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">ID Utilisateur</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+                @forelse($pointages as $p)
+                <tr class="hover:bg-slate-50/20 transition-colors">
+                    <td class="px-8 py-5">
+                        <span class="text-xs font-black text-slate-700">{{ $p->created_at->format('d/m/Y H:i') }}</span>
+                    </td>
+                    <td class="px-6 py-5">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></div>
+                            <span class="text-xs font-medium text-slate-600">{{ $p->action }}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-5 text-center">
+                        <span class="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-black rounded-lg">#{{ $p->idUtilisateur }}</span>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="3" class="px-8 py-10 text-center text-slate-400 font-bold text-sm uppercase">Aucun pointage enregistré aujourd'hui</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
     <!-- Edit Employee Modal -->
     <div x-show="showEditModal" x-transition class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm" @click.self="showEditModal = false" x-cloak>
         <div class="bg-white rounded-[2rem] p-10 max-w-md w-full mx-4 shadow-2xl" @click.stop>

@@ -8,9 +8,18 @@
 
 @section('content')
 <div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-    <div>
-        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Espace Infirmier</h1>
-        <p class="text-slate-400 font-medium mt-1">Assistance aux interventions et prise de constantes vitales.</p>
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-black text-slate-800 tracking-tight">Espace Infirmier</h1>
+            <p class="text-slate-400 font-medium mt-1">Assistance aux interventions et prise de constantes vitales.</p>
+        </div>
+        <form action="{{ route('employe.pointer') }}" method="POST">
+            @csrf
+            <button class="px-6 py-3 bg-primary-600 text-white font-black text-xs rounded-2xl shadow-lg shadow-primary-200 hover:bg-primary-700 transition-all flex items-center gap-2 uppercase">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Pointer Présence
+            </button>
+        </form>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

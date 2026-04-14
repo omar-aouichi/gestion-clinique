@@ -28,8 +28,15 @@ class EmployeService
      */
     public function enregistrerPresence(int $employeId): string
     {
-        // A real implementation would insert into a 'presences' table
-        return "Présence enregistrée à " . now()->toTimeString() . " pour l'employé #{$employeId}.";
+        $employe = Utilisateur::find($employeId);
+        $nomComplet = $employe ? "{$employe->prenom} {$employe->nom}" : "Employé #{$employeId}";
+
+        \App\Models\LogJournal::create([
+            'idUtilisateur' => $employeId,
+            'action'        => "POINTAGE: Présence signalée — {$nomComplet}",
+        ]);
+
+        return "Présence enregistrée à " . now()->toTimeString() . " pour {$nomComplet}.";
     }
 
     /**

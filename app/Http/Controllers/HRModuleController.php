@@ -56,7 +56,12 @@ class HRModuleController extends Controller
                 return $e;
             });
 
-        return view('rh.dashboard', compact('depts', 'employes'));
+        $pointages = \App\Models\LogJournal::where('action', 'like', 'POINTAGE%')
+            ->latest()
+            ->take(20)
+            ->get();
+
+        return view('rh.dashboard', compact('depts', 'employes', 'pointages'));
     }
 
     public function modifierEmploye(Request $request, $id)
