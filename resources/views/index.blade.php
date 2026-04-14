@@ -61,11 +61,8 @@
             </nav>
             
             <div class="flex items-center gap-3">
-                <a href="/login" class="px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-primary-600 bg-slate-50 hover:bg-primary-50 rounded-lg transition-all border border-slate-200 hover:border-primary-200">
-                    Log In
-                </a>
-                <a href="/signup" class="px-5 py-2.5 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-500 rounded-lg shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:-translate-y-0.5 transition-all">
-                    Sign Up
+                <a href="/login" class="px-5 py-2.5 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-500 rounded-lg shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:-translate-y-0.5 transition-all">
+                    Se Connecter
                 </a>
             </div>
         </div>
@@ -95,8 +92,8 @@
                     Experience healthcare reimagined. Book expert consultations, access secure medical records, and monitor your wellness seamlessly through our premier platform.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="/signup" class="px-8 py-4 text-base font-bold text-white bg-slate-900 hover:bg-primary-600 rounded-full shadow-xl hover:shadow-primary-500/25 hover:-translate-y-1 transition-all">
-                        Join as a Patient
+                    <a href="/login" class="px-8 py-4 text-base font-bold text-white bg-slate-900 hover:bg-primary-600 rounded-full shadow-xl hover:shadow-primary-500/25 hover:-translate-y-1 transition-all">
+                        Espace Patient
                     </a>
                     <a href="#services" class="px-8 py-4 text-base font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2">
                         Explore Features <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -469,8 +466,8 @@
                 Sign up today and get immediate access to top doctors, transparent scheduling, and an interface that puts your wellbeing right at your fingertips.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/signup" class="px-8 py-4 text-lg font-bold text-primary-700 bg-white hover:bg-slate-50 rounded-full shadow-xl hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all">
-                    Create Your Account
+                <a href="/login" class="px-8 py-4 text-lg font-bold text-primary-700 bg-white hover:bg-slate-50 rounded-full shadow-xl hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all">
+                    Accéder au Portail
                 </a>
                 <a href="tel:+212500000000" class="px-8 py-4 text-lg font-bold text-white bg-primary-700 hover:bg-primary-800 border border-primary-500 rounded-full transition-all flex justify-center items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
