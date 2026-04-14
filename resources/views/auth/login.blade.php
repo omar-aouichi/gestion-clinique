@@ -1,112 +1,100 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-slate-50">
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Log In - DocDialy</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion — Clinique Connectée</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 900: '#0c4a6e' }
-                    }
+                        primary: { 50:'#eff6ff', 100:'#dbeafe', 200:'#bfdbfe', 500:'#3b82f6', 600:'#2563eb', 700:'#1d4ed8' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; }
+        .glass { backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.95); }
+    </style>
 </head>
-<body class="antialiased text-slate-800 font-sans h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <a href="/" class="flex items-center justify-center gap-2 text-primary-600 mb-6">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-            <span class="text-3xl font-bold tracking-tight">DocDialy</span>
-        </a>
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900">Sign in to your account</h2>
-        <p class="mt-2 text-center text-sm text-slate-600">
-            Or
-            <a href="/signup" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">
-                create a new patient account
-            </a>
-        </p>
-    </div>
+<body class="min-h-screen flex items-center justify-center p-6 bg-slate-950">
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow-xl shadow-slate-200/50 sm:rounded-2xl sm:px-10 border border-slate-100">
-            <form class="space-y-6" action="/patient" method="GET">
-                <div>
-                    <label for="email" class="block text-sm font-medium text-slate-700">Email address or Patient ID</label>
-                    <div class="mt-1 relative">
-                        <svg class="w-5 h-5 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        <input id="email" name="email" type="email" required autocomplete="email" class="block w-full appearance-none rounded-lg border border-slate-300 px-3 pl-10 py-2.5 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm transition-colors" placeholder="patient@example.com">
+    <div class="w-full max-w-md">
+        <!-- Logo Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-600 shadow-xl shadow-primary-500/20 mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                </svg>
+            </div>
+            <h1 class="text-2xl font-black text-white px-2">Clinique Connectée</h1>
+            <p class="text-slate-500 text-sm font-medium mt-1">Plateforme de Gestion Intégrée</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="glass rounded-[2rem] shadow-2xl p-8 border border-white/20">
+            <div class="mb-8">
+                <h2 class="text-xl font-bold text-slate-800">Content de vous revoir</h2>
+                <p class="text-slate-400 text-sm">Veuillez entrer vos identifiants pour continuer</p>
+            </div>
+
+            @if(session('info'))
+                <div class="mb-6 p-4 bg-blue-50 text-blue-700 text-sm rounded-xl border border-blue-100 font-medium">
+                    {{ session('info') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="mb-6 p-4 bg-red-50 text-red-700 text-sm rounded-xl border border-red-100 font-bold">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
+            <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                @csrf
+                
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Identifiant</label>
+                    <input type="text" name="login" required autofocus placeholder="Nom d'utilisateur"
+                        class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all text-sm">
+                </div>
+
+                <div class="space-y-1.5" x-data="{ show: false }">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Mot de passe</label>
+                    <div class="relative">
+                        <input :type="show ? 'text' : 'password'" name="password" required placeholder="••••••••"
+                            class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all text-sm">
+                        <button type="button" @click="show = !show" class="absolute right-3 top-3.5 text-slate-400 hover:text-slate-600">
+                            <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <svg x-show="show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7 1.274-4.057 5.064-7 9.542-7 4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18"/></svg>
+                        </button>
                     </div>
                 </div>
 
-                <div>
-                    <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
-                    <div class="mt-1 relative">
-                        <svg class="w-5 h-5 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        <input id="password" name="password" type="password" required autocomplete="current-password" class="block w-full appearance-none rounded-lg border border-slate-300 px-3 pl-10 py-2.5 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm transition-colors" placeholder="••••••••">
-                    </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="remember" id="remember" class="w-4 h-4 text-primary-600 border-slate-300 rounded focus:ring-primary-500">
+                    <label for="remember" class="ml-2 text-sm text-slate-500">Se souvenir de moi</label>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
-                        <label for="remember-me" class="ml-2 block text-sm text-slate-900">Remember me</label>
-                    </div>
-
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-primary-600 hover:text-primary-500">Forgot your password?</a>
-                    </div>
-                </div>
-
-                <div>
-                    <button type="submit" class="flex w-full justify-center rounded-lg border border-transparent bg-primary-600 py-2.5 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
-                        Sign in
-                    </button>
-                </div>
+                <button type="submit" class="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl shadow-lg shadow-primary-500/20 active:scale-[0.98] transition-all">
+                    Se connecter
+                </button>
             </form>
-            
-            <!-- Quick Demo Login Buttons for Frontend Mocking -->
-            <div class="mt-6">
-                <div class="relative">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-slate-200"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="bg-white px-2 text-slate-500 uppercase tracking-widest text-xs font-bold">Demo Logins (Frontend Only)</span>
-                    </div>
-                </div>
 
-                <div class="mt-6 grid grid-cols-2 gap-3">
-                    <a href="/secretary" class="inline-flex w-full justify-center rounded-md border border-slate-300 bg-white py-2 px-4 text-sm font-medium text-slate-500 shadow-sm hover:bg-slate-50">
-                        <span class="sr-only">Secretary</span>
-                        Secretary
-                    </a>
-                    <a href="/staff" class="inline-flex w-full justify-center rounded-md border border-slate-300 bg-white py-2 px-4 text-sm font-medium text-slate-500 shadow-sm hover:bg-slate-50">
-                        <span class="sr-only">Doctor</span>
-                        Doctor
-                    </a>
-                </div>
-                <div class="mt-3 grid grid-cols-2 gap-3">
-                    <a href="/hr" class="inline-flex w-full justify-center rounded-md border border-slate-300 bg-white py-2 px-4 text-sm font-medium text-slate-500 shadow-sm hover:bg-slate-50">
-                        <span class="sr-only">HR</span>
-                        HR
-                    </a>
-                    <a href="/admin" class="inline-flex w-full justify-center rounded-md border border-slate-300 bg-white py-2 px-4 text-sm font-medium text-slate-500 shadow-sm hover:bg-slate-50">
-                        <span class="sr-only">Admin</span>
-                        Admin
-                    </a>
-                </div>
+            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                <p class="text-xs text-slate-400 font-medium tracking-tight">
+                    &copy; {{ date('Y') }} Connected Health Establishment. Tous droits réservés.
+                </p>
             </div>
         </div>
     </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

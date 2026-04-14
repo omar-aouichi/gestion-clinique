@@ -146,121 +146,51 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-sm">
-                        <!-- Employee 1 -->
+                        @foreach($employes as $emp)
                         <tr class="hover:bg-slate-50/50">
                             <td class="p-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Sarah+Smith&background=F0F9FF&color=0284c7" alt="" class="w-9 h-9 rounded-full">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($emp->nom) }}&background=F0F9FF&color=0284c7" alt="" class="w-9 h-9 rounded-full">
                                     <div>
-                                        <p class="font-semibold text-slate-900">Sarah Smith</p>
-                                        <p class="text-xs text-slate-500">DOB: 12/05/1980 • +212 611 111</p>
+                                        <form action="{{ route('rh.modifier-employe', $emp->id) }}" method="POST" class="flex gap-2 items-center">
+                                            @csrf @method('PUT')
+                                            <input type="text" name="nom" value="{{ $emp->nom }}" class="font-semibold text-slate-900 border border-transparent hover:border-slate-300 px-1 py-0.5 rounded text-sm w-32 focus:outline-none focus:ring-1 focus:ring-primary-500">
+                                            <button type="submit" class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 hover:bg-slate-200">Save</button>
+                                        </form>
+                                        <p class="text-xs text-slate-500">Employé #{{ $emp->id }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="p-4">
-                                <p class="font-medium text-slate-800">Senior Doctor</p>
-                                <p class="text-xs text-slate-500">Medical Staff (Cat A)</p>
+                                <p class="font-medium text-slate-800">Staff</p>
+                                <p class="text-xs text-slate-500">Cat B</p>
                             </td>
                             <td class="p-4">
-                                <span class="bg-primary-50 text-primary-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-primary-100">Cardiology</span>
+                                <form action="{{ route('rh.affecter-employe') }}" method="POST" class="flex gap-1 items-center">
+                                    @csrf
+                                    <input type="hidden" name="employe_id" value="{{ $emp->id }}">
+                                    <select name="departement_id" onchange="this.form.submit()" class="bg-primary-50 text-primary-700 text-xs font-semibold px-2 py-1 rounded-lg border-none outline-none">
+                                        <option value="">Dept: {{ $emp->departement_id }}</option>
+                                        <option value="1">Cardiology (1)</option>
+                                        <option value="2">Surgery (2)</option>
+                                    </select>
+                                </form>
                             </td>
                             <td class="p-4">
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    CDI - Active
+                                    {{ $emp->state->value }}
                                 </span>
                             </td>
                             <td class="p-4 text-right">
-                                <button class="text-primary-600 hover:text-primary-800 font-medium text-sm">Edit</button>
+                                <form action="{{ route('rh.retirer-employe') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="employe_id" value="{{ $emp->id }}">
+                                    <button type="submit" class="text-xs text-red-600 hover:text-red-800 font-medium bg-red-50 px-2 py-1 rounded">Retirer Dept</button>
+                                </form>
                             </td>
                         </tr>
-
-                        <!-- Employee 2 -->
-                        <tr class="hover:bg-slate-50/50">
-                            <td class="p-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Emma+B&background=F0F9FF&color=0284c7" alt="" class="w-9 h-9 rounded-full">
-                                    <div>
-                                        <p class="font-semibold text-slate-900">Emma B.</p>
-                                        <p class="text-xs text-slate-500">DOB: 22/08/1992 • +212 622 222</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="p-4">
-                                <p class="font-medium text-slate-800">Head Nurse</p>
-                                <p class="text-xs text-slate-500">Nursing Staff (Cat B)</p>
-                            </td>
-                            <td class="p-4">
-                                <span class="bg-primary-50 text-primary-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-primary-100">Surgery / OR</span>
-                            </td>
-                            <td class="p-4">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    CDI - Active
-                                </span>
-                            </td>
-                            <td class="p-4 text-right">
-                                <button class="text-primary-600 hover:text-primary-800 font-medium text-sm">Edit</button>
-                            </td>
-                        </tr>
-
-                        <!-- Employee 3 -->
-                        <tr class="hover:bg-slate-50/50">
-                            <td class="p-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Ali+Hassan&background=F0F9FF&color=0284c7" alt="" class="w-9 h-9 rounded-full">
-                                    <div>
-                                        <p class="font-semibold text-slate-900">Ali Hassan</p>
-                                        <p class="text-xs text-slate-500">DOB: 05/11/1995 • +212 633 333</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="p-4">
-                                <p class="font-medium text-slate-800">IT Technician</p>
-                                <p class="text-xs text-slate-500">Admin Support (Cat C)</p>
-                            </td>
-                            <td class="p-4">
-                                <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-200">Admin & HR</span>
-                            </td>
-                            <td class="p-4">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200" title="Ends in 12 days">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                                    CDD - Expiring soon
-                                </span>
-                            </td>
-                            <td class="p-4 text-right">
-                                <button class="text-primary-600 hover:text-primary-800 font-medium text-sm">Edit</button>
-                            </td>
-                        </tr>
-                        
-                        <!-- Employee 4 -->
-                        <tr class="hover:bg-slate-50/50 opacity-60">
-                            <td class="p-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Omar+D&background=F1F5F9&color=475569" alt="" class="w-9 h-9 rounded-full grayscale">
-                                    <div>
-                                        <p class="font-semibold text-slate-900">Omar D.</p>
-                                        <p class="text-xs text-slate-500">DOB: 10/01/1988 • +212 644 444</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="p-4">
-                                <p class="font-medium text-slate-800">Nurse</p>
-                                <p class="text-xs text-slate-500">Nursing Staff (Cat B)</p>
-                            </td>
-                            <td class="p-4">
-                                <span class="bg-primary-50 text-primary-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-primary-100">Emergency / Trauma</span>
-                            </td>
-                            <td class="p-4">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                                    Terminated
-                                </span>
-                            </td>
-                            <td class="p-4 text-right">
-                                <button class="text-primary-600 hover:text-primary-800 font-medium text-sm">View</button>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
