@@ -54,7 +54,7 @@
                     </td>
                     <td class="px-10 py-6">
                         <div class="flex items-center justify-end gap-2">
-                            @if(in_array($d->state->value, ['NOUVELLE', 'ANALYSEE', 'EN_ATTENTE']))
+                            @if(in_array($d->state->value, ['NOUVELLE', 'ANALYSEE', 'EN_ATTENTE', 'ATTENTE']))
                                 <form action="{{ route('dg.valider-demande', $d->id) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="action" value="{{ $d->type === 'recrutement' ? 'recrutement' : 'valider' }}">

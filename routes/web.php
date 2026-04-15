@@ -95,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/departements/affecter',[\App\Http\Controllers\HRModuleController::class, 'affecter'])->name('affecter');
         Route::post('/departements/retirer', [\App\Http\Controllers\HRModuleController::class, 'retirer'])->name('retirer');
         Route::delete('/employes/{id}',      [\App\Http\Controllers\HRModuleController::class, 'destroy'])->name('destroy');
+        Route::post('/employes',             [\App\Http\Controllers\HRModuleController::class, 'storeEmploye'])->name('store-employe');
         Route::post('/departements',         [\App\Http\Controllers\HRModuleController::class, 'storeDepartement'])->name('ajouter-departement');
         Route::delete('/departements/{id}',  [\App\Http\Controllers\HRModuleController::class, 'destroyDepartement'])->name('supprimer-departement');
     });

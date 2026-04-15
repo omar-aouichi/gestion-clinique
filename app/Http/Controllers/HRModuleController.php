@@ -64,6 +64,27 @@ class HRModuleController extends Controller
         return view('rh.dashboard', compact('depts', 'employes', 'pointages'));
     }
 
+    public function storeEmploye(Request $request)
+    {
+        $data = $request->validate([
+            'nom'           => 'required|string|max:100',
+            'prenom'        => 'required|string|max:100',
+            'login'         => 'required|string|max:50|unique:utilisateurs,login',
+            'mdp'           => 'required|string|min:4',
+            'role'          => 'required|string',
+            'contact'       => 'required|string',
+            'dateNaissance' => 'required|date',
+            'departement_id'=> 'nullable|exists:departements,id'
+        ]);
+
+        $data['mdp'] = bcrypt($data['mdp']);
+        $data['statut'] = 'ACTIF';
+
+        $this->rhService->ajouterEmploye($data);
+
+        return back()->with('success', "Compte de {$data['prenom']} {$data['nom']} créé avec succès.");
+    }
+
     public function modifierEmploye(Request $request, $id)
     {
         $this->rhService->modifierEmploye($id, $request->only(['nom', 'prenom', 'contact']));
@@ -127,8 +148,18 @@ class HRModuleController extends Controller
     {
         $demandes = Demande::with('employe')->latest()->get()
             ->map(function ($d) {
-                $d->state = (object) ['value' => strtoupper($d->statut ?? 'EN_ATTENTE')];
-                // Store the employee details clearly for the view
+                // Normalize status: replace spaces and accents, then uppercase
+                $norm = strtoupper($d->statut ?? 'EN_ATTENTE');
+                $norm = str_replace(' ', '_', $norm);
+                $norm = strtr($norm, [
+                    'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+                    'À' => 'A', 'Â' => 'A',
+                    'Î' => 'I', 'Ï' => 'I',
+                    'Ô' => 'O',
+                    'Û' => 'U'
+                ]);
+                $d->state = (object) ['value' => $norm];
+                
                 $d->demandeur_nom = $d->employe ? ($d->employe->prenom . ' ' . $d->employe->nom) : 'Utilisateur Inconnu';
                 $d->demandeur_role = $d->employe ? strtoupper($d->employe->role->value) : 'N/A';
                 return $d;

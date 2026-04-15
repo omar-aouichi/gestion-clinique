@@ -11,15 +11,25 @@
      x-data="{ 
         tab: 'effectifs', 
         showEditModal: false, 
+        showCreateModal: false,
         editEmploye: {id: null, nom: '', prenom: '', contact: ''} 
      }">
-    <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Ressources Humaines</h1>
+    <div class="flex items-center justify-between mb-6">
         <div class="flex bg-slate-100 p-1.5 rounded-2xl">
             <button @click="tab = 'effectifs'" :class="tab === 'effectifs' ? 'bg-white shadow-md text-primary-600' : 'text-slate-500'" class="px-6 py-2 text-xs font-black rounded-xl transition-all">Effectifs</button>
             <button @click="tab = 'depts'" :class="tab === 'depts' ? 'bg-white shadow-md text-primary-600' : 'text-slate-500'" class="px-6 py-2 text-xs font-black rounded-xl transition-all">Départements</button>
             <button @click="tab = 'pointages'" :class="tab === 'pointages' ? 'bg-white shadow-md text-primary-600' : 'text-slate-500'" class="px-6 py-2 text-xs font-black rounded-xl transition-all">Pointages</button>
         </div>
+        
+        <button @click="showCreateModal = true" class="px-6 py-3 bg-slate-900 text-white font-black text-[10px] rounded-2xl hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 uppercase tracking-widest flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+            Nouveau Employé
+        </button>
+    </div>
+
+    <div class="flex flex-col mb-8">
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Ressources Humaines</h1>
+        <p class="text-slate-400 font-medium text-xs mt-1">Gérez le personnel et les unités médicales de l'établissement.</p>
     </div>
 
     <!-- Effectifs Tab -->
@@ -201,6 +211,80 @@
                 <div class="flex gap-3 mt-8">
                     <button type="button" @click="showEditModal = false" class="flex-1 py-3 bg-slate-100 text-slate-600 font-bold text-sm rounded-xl hover:bg-slate-200 transition-colors">Annuler</button>
                     <button type="submit" class="flex-1 py-3 bg-primary-600 text-white font-bold text-sm rounded-xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-200 uppercase">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Create Employee Modal -->
+    <div x-show="showCreateModal" x-transition class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm" @click.self="showCreateModal = false" x-cloak>
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-2xl w-full mx-4 shadow-2xl overflow-y-auto max-h-[90vh]" @click.stop>
+            <form action="{{ route('rh.store-employe') }}" method="POST">
+                @csrf
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h3 class="text-2xl font-black text-slate-800">Recruter un personnel</h3>
+                        <p class="text-slate-400 text-xs font-medium">Créez un nouvel accès au portail de l'établissement.</p>
+                    </div>
+                    <button type="button" @click="showCreateModal = false" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                        <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Prénom</label>
+                        <input type="text" name="prenom" required class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nom</label>
+                        <input type="text" name="nom" required class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Rôle / Fonction</label>
+                        <select name="role" required class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all appearance-none">
+                            <option value="medecin">Médecin</option>
+                            <option value="infirmier">Infirmier(e)</option>
+                            <option value="secretaire">Secrétaire</option>
+                            <option value="gerant_stock">Gérant de Stock</option>
+                            <option value="rh">Responsable RH</option>
+                            <option value="cadre_administratif">Cadre Administratif</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Département</label>
+                        <select name="departement_id" class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all appearance-none">
+                            <option value="">Non assigné</option>
+                            @foreach($depts as $d)
+                                <option value="{{ $d->id }}">{{ $d->nom }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Date de Naissance</label>
+                        <input type="date" name="dateNaissance" required class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Contact (Téléphone)</label>
+                        <input type="text" name="contact" required class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-8 border-t border-slate-50 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Identifiant de connexion</label>
+                        <input type="text" name="login" required placeholder="ex: j.doe" class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Mot de passe temporaire</label>
+                        <input type="password" name="mdp" required class="w-full px-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/10 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mt-10">
+                    <button type="button" @click="showCreateModal = false" class="flex-1 py-4 bg-slate-100 text-slate-600 font-bold text-sm rounded-2xl hover:bg-slate-200 transition-colors">Annuler</button>
+                    <button type="submit" class="flex-1 py-4 bg-primary-600 text-white font-black text-sm rounded-2xl hover:bg-primary-700 transition-all shadow-xl shadow-primary-200 uppercase tracking-widest">
+                        Confirmer le Recrutement
+                    </button>
                 </div>
             </form>
         </div>
